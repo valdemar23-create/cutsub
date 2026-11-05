@@ -65,9 +65,16 @@ Sem isto o login falha com **`origin_mismatch`**.
    https://O-TEU-UTILIZADOR.github.io
    ```
 
-3. **Mantém** `http://localhost:5173` (para continuares a usar a versão local). **Save**.
-4. **Audience** → continua em **Testing**, com o teu email em **Test users** (ver secção 8).
-5. *(Só para cancelamento real)* **Data Access**: `youtube.force-ssl` deve estar na lista (ver `GOOGLE_CLOUD_SETUP.md`, secção D3.2).
+3. **Authorized redirect URIs** → **Add URI** → escreve o endereço **completo da app, com a barra no fim**
+   (necessário desde a D3.3.1 para o login no Android):
+
+   ```
+   https://O-TEU-UTILIZADOR.github.io/cutsub/
+   ```
+
+4. **Mantém** `http://localhost:5173` nas *origins* (para continuares a usar a versão local). **Save**.
+5. **Audience** → continua em **Testing**, com o teu email em **Test users** (ver secção 8).
+6. *(Só para cancelamento real)* **Data Access**: `youtube.force-ssl` deve estar na lista (ver `GOOGLE_CLOUD_SETUP.md`, secção D3.2).
 
 As alterações podem demorar de 5 minutos a algumas horas.
 
@@ -129,12 +136,16 @@ Para uso pessoal, o modo **Testing** da Google Cloud é o caminho prático, mas 
 - O logótipo atual (quadrado vermelho com triângulo "play") é parecido com o do YouTube; numa verificação
   futura isso pode ser questionado (ver relatório da D3.3).
 
-### Login dentro da app instalada — a validar por ti
-- **Windows (Chrome/Edge)**: a janela de login da Google abre por cima da app — esperado que funcione.
-- **Android**: a janela de login pode abrir como separador do Chrome por cima da app. Se aparecer
-  «A janela da Google foi fechada» sem teres fechado nada, usa a CutSub no Chrome normal (o endereço) e
-  diz-me para eu analisar.
-- **iPhone/iPad**: não é o foco desta versão e o login em app instalada não foi validado.
+### Login no Android (D3.3.1)
+- No **PC** o login abre uma janela da Google por cima da CutSub (como sempre).
+- No **Android** (Chrome e app instalada) a CutSub **vai à página da Google e volta** (redirecionamento).
+  Não depende de janelas pop-up, que no Android são separadores à parte e podiam fazer perder o login.
+- Para isto funcionar, o endereço da app tem de estar em **Authorized redirect URIs** (secção 3, passo 3).
+  Sem isso a Google mostra `redirect_uri_mismatch`.
+- **Cancelamento real no Android**: na primeira vez, ao confirmares, a CutSub vai à Google pedir a permissão
+  de gestão e volta. A confirmação desse canal **volta a abrir**: tens de carregar outra vez em «Sim, cancelar».
+  Nada é cancelado sozinho.
+- Se recusares a permissão de cancelamento no Android, voltas ao ecrã inicial com a mensagem e tens de entrar outra vez.
 
 ## 9. Continuar a usar localmente
 

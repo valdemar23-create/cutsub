@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useAuth } from '../../auth/AuthContext';
 import { DemoBanner } from '../../components/DemoBadge';
 import { Icon } from '../../components/Icon';
 import { LiveBanner } from '../../components/LiveBanner';
@@ -70,6 +71,20 @@ export function AppShell({
   const [session, setSession] = useState<CleanupSession | null>(null);
   // D3.2: cancelamento real (ou simulado) de UMA subscrição de cada vez.
   const cancellation = useCancellation(removeChannel);
+
+  // D3.3.1 (Android): depois de ir à Google buscar a permissão de cancelamento, volta a abrir
+  // a confirmação desse canal. Nunca cancela sozinho: o utilizador tem de confirmar outra vez.
+  const { pendingCancelChannelId, clearPendingCancel } = useAuth();
+  const { ask: askCancel } = cancellation;
+  useEffect(() => {
+    if (isDemo || !pendingCancelChannelId || subs.status !== 'ready') return;
+    const channel = subs.channels.find((c) => c.id === pendingCancelChannelId);
+    clearPendingCancel();
+    if (channel) {
+      setTab('channels');
+      askCancel(channel);
+    }
+  }, [isDemo, pendingCancelChannelId, subs, clearPendingCancel, askCancel]);
 
   // Ao mudar de separador, volta ao topo.
   useEffect(() => {

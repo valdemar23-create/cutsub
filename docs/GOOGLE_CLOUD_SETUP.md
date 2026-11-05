@@ -152,4 +152,7 @@ Depois de mudares o Data Access, as alterações podem demorar alguns minutos a 
 
 Em **Clients → Authorized JavaScript origins** acrescenta `https://O-TEU-UTILIZADOR.github.io`
 (só a origem: sem `/cutsub` e sem barra no fim), mantendo `http://localhost:5173`.
+
+**D3.3.1 (login no Android):** em **Clients → Authorized redirect URIs** acrescenta
+`https://O-TEU-UTILIZADOR.github.io/cutsub/` (endereço completo, com a barra no fim).
 Detalhes e limitações do modo Testing: [PUBLICAR_E_INSTALAR.md](PUBLICAR_E_INSTALAR.md).

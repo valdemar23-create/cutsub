@@ -65,7 +65,7 @@ export function useCancellation(onCancelled: (channelId: string) => void): Cance
     const run: Promise<void> =
       CANCEL_MODE === 'real'
         ? // ensureWriteAccess é chamado já, dentro do clique (a janela da Google não é bloqueada).
-          ensureWriteAccess().then((token) => cancelSubscriptionOnYouTube(channel.subscriptionId!, token))
+          ensureWriteAccess(channel.id).then((token) => cancelSubscriptionOnYouTube(channel.subscriptionId!, token))
         : simulateCancelSubscription();
 
     run
