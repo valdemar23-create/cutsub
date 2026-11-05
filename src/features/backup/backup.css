@@ -1,0 +1,64 @@
+.backup {
+  display: grid;
+  gap: var(--sp-4);
+  margin-top: var(--sp-8);
+  padding: var(--sp-5);
+}
+
+.backup-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+}
+
+.backup-title {
+  font-size: var(--fs-md);
+  font-weight: 700;
+}
+
+.backup-sub {
+  margin-top: 2px;
+  max-width: 60ch;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+.backup-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+.backup-actions .btn {
+  min-height: 44px;
+}
+
+.backup-confirm {
+  display: grid;
+  gap: var(--sp-2);
+  padding: var(--sp-4);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  font-size: var(--fs-sm);
+}
+
+.backup-confirm-title {
+  font-size: var(--fs-md);
+  font-weight: 700;
+}
+
+.backup-compare {
+  display: grid;
+  gap: 4px;
+  padding-left: 1.1em;
+  list-style: disc;
+  color: var(--text-muted);
+}
+
+.backup-warn {
+  color: var(--maybe);
+  font-weight: 600;
+}

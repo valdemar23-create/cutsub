@@ -1,0 +1,79 @@
+# CutSub — publicação no GitHub Pages (D3.3)
+# Corre sozinho sempre que enviares alterações para o ramo "main".
+# Também pode ser lançado à mão: separador Actions → "Publicar CutSub" → Run workflow.
+
+name: Publicar CutSub
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verificar que não há credenciais privadas no repositório
+        run: |
+          if [ -f .env.local ] || [ -f .env ]; then
+            echo "::error::Encontrado .env/.env.local no repositório. Apaga-o do GitHub (o Client ID vai nas Variables do repositório)."
+            exit 1
+          fi
+          # GOCSPX- é o prefixo dos Client Secrets da Google. A CutSub NÃO usa Client Secret.
+          if grep -rIl --exclude-dir=.git --exclude-dir=.github --exclude-dir=node_modules -e 'GOCSPX-' -e 'client_secret' . ; then
+            echo "::error::Parece haver um Client Secret no código. Remove-o antes de publicar."
+            exit 1
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Instalar dependências
+        run: npm install --no-audit --no-fund
+
+      - name: Testes do classificador
+        run: npm run test:classifier
+
+      - name: Compilar (com a pasta do GitHub Pages)
+        env:
+          # O Client ID é público por natureza (não é um segredo). Fica em Settings → Secrets and variables → Actions → Variables.
+          VITE_GOOGLE_CLIENT_ID: ${{ vars.VITE_GOOGLE_CLIENT_ID }}
+          # Vazio = cancelamentos SIMULADOS. Só "real" se o definires de propósito.
+          VITE_CUTSUB_CANCEL_MODE: ${{ vars.VITE_CUTSUB_CANCEL_MODE }}
+        run: |
+          REPO="${{ github.event.repository.name }}"
+          if [[ "$REPO" == *.github.io ]]; then export CUTSUB_BASE="/"; else export CUTSUB_BASE="/$REPO/"; fi
+          if [ -z "$VITE_GOOGLE_CLIENT_ID" ]; then echo "::warning::Falta a variável VITE_GOOGLE_CLIENT_ID: o login não vai funcionar."; fi
+          echo "A publicar em $CUTSUB_BASE (modo de cancelamento: ${VITE_CUTSUB_CANCEL_MODE:-simulado})"
+          npm run build
+
+      - name: Confirmar que o build não contém segredos
+        run: |
+          if grep -rIl -e 'GOCSPX-' -e 'client_secret' dist ; then echo "::error::Segredo encontrado no build."; exit 1; fi
+          test -f dist/sw.js && test -f dist/manifest.webmanifest
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,202 @@
+/* Cancelamento real (D3.2) */
+
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: var(--gutter);
+  background: rgba(0, 0, 0, 0.66);
+  backdrop-filter: blur(4px);
+}
+
+.dialog {
+  display: grid;
+  gap: var(--sp-4);
+  width: 100%;
+  max-width: 460px;
+  padding: var(--sp-6);
+}
+
+.dialog-mode {
+  justify-self: start;
+  padding: 3px 10px;
+  border-radius: var(--r-pill);
+  background: var(--demo);
+  color: #1a1400;
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.dialog-channel {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+}
+
+.dialog-title {
+  font-size: var(--fs-lg);
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.dialog-name {
+  margin-top: 2px;
+  color: var(--text);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.dialog-text {
+  color: var(--text-muted);
+}
+
+.dialog-text strong {
+  color: var(--text);
+}
+
+.dialog-error {
+  display: grid;
+  gap: 4px;
+  padding: var(--sp-3) var(--sp-4);
+  border: 1px solid rgba(255, 64, 88, 0.45);
+  border-radius: var(--r-md);
+  background: rgba(255, 64, 88, 0.08);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+.dialog-error-title {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--sp-3);
+}
+
+.dialog-actions .btn {
+  flex: 1 1 180px;
+}
+
+.dialog-note {
+  color: var(--text-faint);
+  font-size: var(--fs-xs);
+  text-align: center;
+}
+
+.btn--danger {
+  background: var(--remove);
+  color: #fff;
+}
+
+.btn--danger:hover:not(:disabled) {
+  background: var(--accent-strong);
+}
+
+.btn--danger:disabled {
+  opacity: 0.7;
+}
+
+.btn-spinner--light {
+  border-color: rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+}
+
+/* Botão no cartão do canal (só para canais marcados "Remover") */
+.cancel-real-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 0 var(--sp-4);
+  border: 1px solid rgba(255, 64, 88, 0.55);
+  border-radius: var(--r-pill);
+  background: rgba(255, 64, 88, 0.08);
+  color: #ff8b98;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cancel-real-btn:hover:not(:disabled) {
+  background: rgba(255, 64, 88, 0.16);
+  color: #fff;
+}
+
+.cancel-real-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Contador da sessão */
+.cancel-counter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-2) var(--sp-3);
+  margin-bottom: var(--sp-4);
+  padding: var(--sp-2) var(--sp-4);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+.cancel-counter-num {
+  color: var(--text);
+  font-size: var(--fs-lg);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.cancel-counter-sim {
+  color: var(--demo);
+  font-weight: 700;
+}
+
+.cancel-counter-last {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  padding: 2px 4px 2px 10px;
+  border-radius: var(--r-pill);
+  background: rgba(90, 208, 138, 0.12);
+  color: var(--keep);
+  font-weight: 600;
+}
+
+.cancel-counter-close {
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* D3.3 — ecrãs baixos (telemóvel na horizontal): o diálogo nunca fica cortado */
+.dialog {
+  max-height: calc(100dvh - 2 * var(--gutter));
+  overflow-y: auto;
+}
+
+@media (max-width: 480px) {
+  .dialog {
+    padding: var(--sp-5);
+  }
+
+  .dialog-actions .btn {
+    flex-basis: 100%;
+    min-height: 50px;
+  }
+}

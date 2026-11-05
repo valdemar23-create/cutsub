@@ -1,0 +1,94 @@
+/* D3.3 — instalação, atualização e ligação */
+
+.pwa-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  margin: 0 0 var(--sp-4);
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-md);
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+}
+
+.pwa-banner > svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.pwa-banner--offline {
+  border: 1px solid rgba(247, 201, 72, 0.45);
+  background: var(--demo-soft);
+  color: #f3dc94;
+}
+
+.pwa-update {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom) + 12px);
+  z-index: 90;
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-3);
+  width: min(560px, calc(100vw - 2 * var(--gutter)));
+  padding: var(--sp-3) var(--sp-4);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  font-size: var(--fs-sm);
+}
+
+@media (min-width: 1024px) {
+  .pwa-update {
+    bottom: 24px;
+  }
+}
+
+.pwa-update-btn {
+  min-height: 40px;
+  font-size: var(--fs-sm);
+}
+
+.pwa-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  margin-top: var(--sp-8);
+  padding: var(--sp-5);
+}
+
+.pwa-card-title {
+  font-weight: 700;
+}
+
+.pwa-card-text {
+  margin-top: 2px;
+  max-width: 62ch;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+.pwa-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+.pwa-inline {
+  margin-top: var(--sp-2);
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: var(--fs-sm);
+}
+
+.pwa-inline-hint {
+  margin-top: var(--sp-2);
+  color: var(--text-faint);
+  font-size: var(--fs-xs);
+}

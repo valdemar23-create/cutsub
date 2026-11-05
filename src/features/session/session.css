@@ -1,0 +1,30 @@
+.session-screen {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: calc(env(safe-area-inset-top) + var(--sp-6)) var(--gutter) calc(env(safe-area-inset-bottom) + var(--sp-6));
+  background: radial-gradient(ellipse at 50% 30%, rgba(255, 64, 88, 0.14), transparent 60%), var(--bg);
+}
+
+.session-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-4);
+  width: 100%;
+  max-width: 420px;
+  padding: var(--sp-8) var(--sp-6);
+  text-align: center;
+}
+
+.session-title {
+  margin-top: var(--sp-2);
+  font-size: var(--fs-xl);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.session-text {
+  color: var(--text-muted);
+  margin-bottom: var(--sp-2);
+}
